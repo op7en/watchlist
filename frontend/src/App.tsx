@@ -13,8 +13,7 @@ function App() {
 
   useEffect(() => {
     if (token) dispatch(fetchWatchlist());
-  }, [token]);
-
+  }, [token, dispatch]); // ← add dispatch here
   if (!token) return <Auth />;
 
   return (
