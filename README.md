@@ -4,7 +4,7 @@
 
 ## 🌐 Демо
 
-[https://watchlist-184c0gx28-olegs-projects-dbc9c07d.vercel.app/](https://watchlist-184c0gx28-olegs-projects-dbc9c07d.vercel.app/)
+[https://watchlist-kzv9bk1zd-olegs-projects-dbc9c07d.vercel.app/](https://watchlist-kzv9bk1zd-olegs-projects-dbc9c07d.vercel.app/)
 
 > ⚠️ Информация для пользователя:
 > Бэкенд развёрнут на бесплатном хостинге Railway.
