@@ -34,8 +34,9 @@ const SearchResults = () => {
       <p className="section-label">Search Results</p>
       <div className="results-grid">
         {movies.map((movie: Movie) => {
-          const isAdded = watchlist.some((m) => m.id === movie.id);
-
+          const isAdded = watchlist.some(
+            (m) => m.movieId === movie.id || m.id === movie.id,
+          );
           return (
             <div className="movie-card" key={movie.id}>
               <img
