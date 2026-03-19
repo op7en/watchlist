@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User, { IUser } from "../models/User";
+import User from "../models/User";
 
 const router = Router();
 
@@ -9,7 +9,7 @@ router.post("/register", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const hashed = await bcrypt.hash(password, 10);
-    const user: IUser = new User({ email, password: hashed });
+    const user = new User({ email, password: hashed });
     await user.save();
     res.status(201).json({ message: "User created" });
   } catch (err) {
