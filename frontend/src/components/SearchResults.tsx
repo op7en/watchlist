@@ -25,32 +25,46 @@ const SearchResults = () => {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="loading">Loading...</p>;
+
+  if (movies.length === 0) return null;
 
   return (
     <div>
-      {movies.map((movie: Movie) => {
-        const isAdded = watchlist.some((m) => m.id === movie.id);
+      <p className="section-label">Search Results</p>
+      <div className="results-grid">
+        {movies.map((movie: Movie) => {
+          const isAdded = watchlist.some((m) => m.id === movie.id);
 
-        return (
-          <div key={movie.id}>
-            <img
-              src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-              alt={movie.title}
-            />
-            <h4>{movie.title}</h4>
-            <button
-              onClick={() => dispatch(addMovieToDB(movie))}
-              disabled={isAdded}
-            >
-              {isAdded ? "Added ✓" : "Add"}
-            </button>
-            <button onClick={() => handleTrailer(movie.id)}>
-              Watch Trailer
-            </button>
-          </div>
-        );
-      })}
+          return (
+            <div className="movie-card" key={movie.id}>
+              <img
+                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={movie.title}
+              />
+              <div className="movie-card-body">
+                <p className="movie-card-title">{movie.title}</p>
+                <p className="movie-card-year">{movie.year}</p>
+                <div className="movie-card-actions">
+                  <button
+                    className="btn-add"
+                    onClick={() => dispatch(addMovieToDB(movie))}
+                    disabled={isAdded}
+                  >
+                    {isAdded ? "Added ✓" : "Add"}
+                  </button>
+                  <button
+                    className="btn-trailer"
+                    onClick={() => handleTrailer(movie.id)}
+                  >
+                    Trailer
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };

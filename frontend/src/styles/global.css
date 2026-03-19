@@ -1,0 +1,42 @@
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface2: #1e1e1e;
+  --gold: #c9a84c;
+  --gold-dim: #a8883a;
+  --text: #e8e0d0;
+  --text-muted: #7a7060;
+  --red: #c0392b;
+  --radius: 4px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "DM Sans", sans-serif;
+  font-weight: 300;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(
+      ellipse at 20% 50%,
+      rgba(201, 168, 76, 0.04) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at 80% 20%,
+      rgba(201, 168, 76, 0.03) 0%,
+      transparent 50%
+    );
+}
+
+.loading {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  padding: 20px 0;
+}

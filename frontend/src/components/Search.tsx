@@ -12,15 +12,22 @@ const Search = () => {
     dispatch(fetchMovies(query));
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") handleSearch();
+  };
+
   return (
-    <div>
+    <div className="search-wrapper">
       <input
         type="text"
         placeholder="Search movies..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button className="btn-search" onClick={handleSearch}>
+        Search
+      </button>
     </div>
   );
 };

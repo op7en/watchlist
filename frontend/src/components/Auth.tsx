@@ -27,24 +27,31 @@ const Auth = () => {
   };
 
   return (
-    <div>
-      <h2>{isLogin ? "Login" : "Register"}</h2>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleSubmit}>{isLogin ? "Login" : "Register"}</button>
-      <button onClick={() => setIsLogin(!isLogin)}>
-        {isLogin ? "No account? Register" : "Have account? Login"}
-      </button>
+    <div className="auth-wrapper">
+      <div className="auth-box">
+        <h2 className="auth-title">{isLogin ? "Login" : "Register"}</h2>
+        <p className="auth-subtitle">
+          {isLogin ? "Welcome back" : "Create your account"}
+        </p>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className="btn-primary" onClick={handleSubmit}>
+          {isLogin ? "Login" : "Register"}
+        </button>
+        <button className="btn-toggle" onClick={() => setIsLogin(!isLogin)}>
+          {isLogin ? "No account? Register" : "Have account? Login"}
+        </button>
+      </div>
     </div>
   );
 };

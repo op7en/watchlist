@@ -1,0 +1,59 @@
+@media (max-width: 768px) {
+  .app-header {
+    padding: 20px 0 24px;
+    margin-bottom: 24px;
+  }
+
+  .app-logo {
+    font-size: 1.4rem;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+  }
+
+  .watchlist-item {
+    flex-wrap: wrap;
+  }
+
+  .watchlist-item-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-wrapper {
+    padding: 0 16px 40px;
+  }
+
+  .auth-box {
+    width: 100%;
+    margin: 16px;
+    padding: 36px 24px;
+  }
+
+  .search-wrapper {
+    flex-direction: column;
+  }
+
+  .btn-search {
+    width: 100%;
+    text-align: center;
+  }
+
+  .results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .watchlist-item img {
+    width: 36px;
+    height: 54px;
+  }
+
+  .btn-logout {
+    padding: 8px 12px;
+    font-size: 0.78rem;
+  }
+}

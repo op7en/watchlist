@@ -1,0 +1,40 @@
+.app-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 0 40px;
+  border-bottom: 1px solid #1e1e1e;
+  margin-bottom: 40px;
+}
+
+.app-logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.8rem;
+  letter-spacing: 0.1em;
+  color: var(--gold);
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: var(--text-muted);
+  padding: 8px 18px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.btn-logout:hover {
+  border-color: var(--red);
+  color: var(--red);
+}

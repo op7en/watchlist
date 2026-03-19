@@ -1,0 +1,108 @@
+.section-label {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  margin-bottom: 48px;
+}
+
+.movie-card {
+  background: var(--surface);
+  border: 1px solid #1e1e1e;
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+  position: relative;
+}
+
+.movie-card:hover {
+  transform: translateY(-4px);
+  border-color: #2e2e2e;
+}
+
+.movie-card img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  object-fit: cover;
+  display: block;
+  background: var(--surface2);
+}
+
+.movie-card-body {
+  padding: 12px;
+}
+
+.movie-card-title {
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  color: var(--text);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.movie-card-year {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.movie-card-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-add {
+  flex: 1;
+  background: var(--gold);
+  color: #0a0a0a;
+  border: none;
+  padding: 7px 0;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background 0.2s;
+}
+
+.btn-add:hover {
+  background: var(--gold-dim);
+}
+
+.btn-add:disabled {
+  background: #2a2a2a;
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.btn-trailer {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: var(--text-muted);
+  padding: 7px 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-trailer:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
