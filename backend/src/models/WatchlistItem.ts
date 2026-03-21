@@ -14,6 +14,8 @@ const WatchlistItemSchema: Schema<IWatchlistItem> = new Schema({
   title: { type: String, required: true },
   year: { type: String, default: "" },
   poster_path: { type: String, default: "" },
+  rating: { type: Number, default: 0 },
+  watched: { type: Boolean, default: false },
   dateAdded: { type: Date, default: Date.now },
 });
 export default mongoose.model<IWatchlistItem>(

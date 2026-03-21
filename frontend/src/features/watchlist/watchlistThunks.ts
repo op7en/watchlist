@@ -27,3 +27,11 @@ export const removeMovieFromDB = createAsyncThunk(
     return id;
   },
 );
+
+export const rateMovie = createAsyncThunk(
+  "watchlist/rate",
+  async ({ id, rating }: { id: string; rating: number }) => {
+    const res = await API.patch(`/watchlist/${id}/rating`, { rating });
+    return res.data;
+  },
+);

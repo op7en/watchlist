@@ -15,6 +15,20 @@ router.get("/", async (req: Request, res: Response) => {
   }
 });
 
+router.patch("/:id/rating", async (req: Request, res: Response) => {
+  try {
+    const { rating } = req.body;
+    const item = await WatchlistItem.findByIdAndUpdate(
+      req.params.id,
+      { rating },
+      { new: true },
+    );
+    res.json(item);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.post("/", async (req: Request, res: Response) => {
   try {
     const { movieId, title, year, poster_path } = req.body;

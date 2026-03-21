@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../app/store";
 import { removeMovieFromDB } from "../features/watchlist/watchlistThunks";
 import axios from "axios";
-
+import { rateMovie } from "../features/watchlist/watchlistThunks";
 const Watchlist = () => {
   const movies = useSelector((state: RootState) => state.watchlist.movies);
   const dispatch = useDispatch<AppDispatch>();
@@ -39,6 +39,19 @@ const Watchlist = () => {
               <div className="watchlist-item-info">
                 <p className="watchlist-item-title">{movie.title}</p>
                 <p className="watchlist-item-year">{movie.year}</p>
+              </div>
+              <div className="watchlist-item-rating">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    className={`btn-star ${movie.rating && movie.rating >= star ? "active" : ""}`}
+                    onClick={() =>
+                      dispatch(rateMovie({ id: movie._id!, rating: star }))
+                    }
+                  >
+                    ★
+                  </button>
+                ))}
               </div>
               <div className="watchlist-item-actions">
                 <button

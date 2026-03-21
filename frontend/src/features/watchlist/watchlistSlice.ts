@@ -3,6 +3,7 @@ import {
   fetchWatchlist,
   addMovieToDB,
   removeMovieFromDB,
+  rateMovie,
 } from "./watchlistThunks";
 
 export interface Movie {
@@ -12,6 +13,8 @@ export interface Movie {
   title: string;
   year: string;
   poster_path: string;
+  rating?: number;
+  watched?: boolean;
 }
 
 interface WatchlistState {
@@ -41,6 +44,12 @@ const watchlistSlice = createSlice({
       })
       .addCase(removeMovieFromDB.fulfilled, (state, action) => {
         state.movies = state.movies.filter((m) => m._id !== action.payload);
+      })
+      .addCase(rateMovie.fulfilled, (state, action) => {
+        const index = state.movies.findIndex(
+          (m) => m._id === action.payload._id,
+        );
+        if (index !== -1) state.movies[index] = action.payload;
       });
   },
 });
