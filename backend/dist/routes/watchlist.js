@@ -17,6 +17,16 @@ router.get("/", async (req, res) => {
         res.status(500).json(err);
     }
 });
+router.patch("/:id/rating", async (req, res) => {
+    try {
+        const { rating } = req.body;
+        const item = await WatchlistItem_1.default.findByIdAndUpdate(req.params.id, { rating }, { new: true });
+        res.json(item);
+    }
+    catch (err) {
+        res.status(500).json(err);
+    }
+});
 router.post("/", async (req, res) => {
     try {
         const { movieId, title, year, poster_path } = req.body;
