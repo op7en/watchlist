@@ -5,9 +5,12 @@ export interface IWatchlistItem extends Document {
   movieId: number;
   title: string;
   year: string;
+  rating: number;
   poster_path: string;
+  watched: boolean; // добавлено
   dateAdded: Date;
 }
+
 const WatchlistItemSchema: Schema<IWatchlistItem> = new Schema({
   userId: { type: String, required: true },
   movieId: { type: Number, required: true },
@@ -18,6 +21,7 @@ const WatchlistItemSchema: Schema<IWatchlistItem> = new Schema({
   watched: { type: Boolean, default: false },
   dateAdded: { type: Date, default: Date.now },
 });
+
 export default mongoose.model<IWatchlistItem>(
   "WatchlistItem",
   WatchlistItemSchema,
