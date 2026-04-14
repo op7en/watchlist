@@ -26,3 +26,29 @@ mongoose
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   })
   .catch((err) => console.log(err));
+
+// Close MongoDB connection after 10 minutes of inactivity
+let inactivityTimer: NodeJS.Timeout;
+
+const resetInactivityTimer = () => {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(
+    async () => {
+      await mongoose.disconnect();
+      console.log("MongoDB disconnected due to inactivity");
+    },
+    5 * 60 * 1000,
+  );
+};
+
+// Reconnect on request if disconnected
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(process.env.MONGO_URI || "");
+    console.log("MongoDB reconnected");
+  }
+  resetInactivityTimer();
+  next();
+});
+
+resetInactivityTimer();
