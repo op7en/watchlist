@@ -1,86 +1,73 @@
-# 🎬 Watchlist — Список фильмов
+# Watchlist
 
-Полноценное веб-приложение для поиска фильмов и формирования личного списка просмотра, построенное на стеке React + Node.js + TypeScript.
+![Demo](watchlist.png)
 
-## 🌐 Демо
+Fullstack приложение для отслеживания фильмов на React, TypeScript и Node.js.
 
-[https://watchlist-sigma-jade.vercel.app/](https://watchlist-sigma-jade.vercel.app/)
+Ищи фильмы, добавляй в личный вотчлист и смотри трейлеры — всё в одном месте.
 
-> ⚠️ Информация для пользователя:
-> Бэкенд развёрнут на бесплатном хостинге Railway.
-> Из-за ограничений платформы сервер может «засыпать» после периода бездействия.
-> Время ответа на первый запрос после простоя может быть увеличено.
+🔗 **[Live Demo](https://watchlist-sigma-jade.vercel.app)**
 
-## ✨ Функциональность
+> Бэкенд работает на бесплатном тарифе Railway и может несколько секунд просыпаться после простоя.
 
-- Регистрация и авторизация пользователей (JWT)
-- Поиск фильмов в реальном времени через TMDB API
-- Добавление и удаление фильмов из личного списка просмотра
-- Данные сохраняются в базе данных для каждого пользователя отдельно
-- Просмотр трейлеров на YouTube прямо из приложения
-- Адаптивный дизайн для мобильных и десктоп устройств
+---
 
-## 📸 Скриншоты
+## Зачем это сделано
 
-![watchlist](watchlist.png)
-![main](search.png)
-![auth](auth.png)
+Большинство приложений для фильмов — просто список названий без структуры.
 
-## 🛠 Технологии
+Идея проекта простая: вотчлист должен работать как личная медиасистема, а не куча закладок.
 
-**Frontend:**
-- React.js
-- TypeScript
-- Redux Toolkit
-- Axios
-- TMDB API
+- Разделяй то, что хочешь посмотреть, и то, что уже видел
+- Находи и сохраняй фильмы не переключаясь между приложениями
+- Смотри трейлеры не выходя из приложения
+- Данные хранятся на сервере для каждого пользователя отдельно
 
-**Backend:**
-- Node.js
-- Express.js
-- TypeScript
-- MongoDB Atlas
-- Mongoose
-- bcryptjs
-- JSON Web Token (JWT)
+---
 
-**Деплой:**
-- Vercel (фронтенд)
-- Railway (бэкенд)
+## Основные возможности
 
-## 🚀 Локальный запуск
+### Поиск фильмов
+Поиск в реальном времени через TMDB API. Результаты появляются по мере ввода.
 
-### Backend
-```bash
-cd backend
-npm install
-npm run dev
-```
+### Личный вотчлист
+Добавляй и удаляй фильмы. Данные хранятся в базе данных привязанными к аккаунту.
 
-### Frontend
-```bash
-cd frontend
-npm install
-npm start
-```
+### Просмотр трейлеров
+YouTube-трейлеры открываются прямо внутри приложения.
 
-## ⚙️ Переменные окружения
+### Аутентификация
+Регистрация и вход через JWT. У каждого пользователя изолированные данные.
 
-Создайте файл `.env` в папке `backend`:
-```
-MONGO_URI=ваша_строка_подключения_mongodb
-JWT_SECRET=ваш_секретный_ключ
-PORT=5000
-```
+### Адаптивный дизайн
+Работает на мобильных и десктопе.
 
-Создайте файл `.env` в папке `frontend`:
-```
-REACT_APP_API_URL=http://localhost:5000
-REACT_APP_TMDB_API_KEY=ваш_ключ_tmdb
-REACT_APP_TMDB_URL=https://api.themoviedb.org/3
-```
+---
 
-## 📁 Структура проекта
+## Скриншоты
+
+### Поиск
+![Search](search.png)
+
+### Вотчлист
+![Watchlist](watchlist.png)
+
+### Авторизация
+![Auth](auth.png)
+
+---
+
+## Стек технологий
+
+| Слой | Технологии |
+|------|-----------|
+| Frontend | React, TypeScript, Redux Toolkit, Axios, TMDB API |
+| Backend | Node.js, Express, TypeScript, MongoDB Atlas, Mongoose, JWT, bcryptjs |
+| Деплой | Vercel (frontend) · Railway (backend) |
+
+---
+
+## Структура проекта
 
 ```
 watchlist/
@@ -102,3 +89,41 @@ watchlist/
         ├── pages/
         └── styles/
 ```
+
+---
+
+## Запуск локально
+
+**Бэкенд**
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+**Фронтенд**
+```bash
+cd frontend
+npm install
+npm start
+```
+
+**Переменные окружения**
+
+Файл `.env` в папке backend:
+```
+MONGO_URI=строка_подключения_mongodb
+JWT_SECRET=секретный_ключ
+PORT=5000
+```
+
+Файл `.env` в папке frontend:
+```
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_TMDB_API_KEY=ключ_tmdb
+REACT_APP_TMDB_URL=https://api.themoviedb.org/3
+```
+
+---
+
+[Read in English](README.md)
