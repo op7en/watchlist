@@ -126,4 +126,4 @@ REACT_APP_TMDB_URL=https://api.themoviedb.org/3
 
 ---
 
-[Читать на русском](README.ru.md)
+[Читать на русском](READMERU.md)
