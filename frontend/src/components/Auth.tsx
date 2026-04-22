@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import axios from "axios";
 import { loginSuccess } from "../features/auth/authSlice";
 import { AppDispatch } from "../app/store";
 import API from "../api/axios";
@@ -8,9 +10,15 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
   const handleSubmit = async () => {
+    if (!email || !password) {
+      toast.warn("Fill in all fields");
+      return;
+    }
+    setSubmitting(true);
     try {
       const endpoint = isLogin ? "/auth/login" : "/auth/register";
       const res = await API.post(endpoint, { email, password });
@@ -18,11 +26,16 @@ const Auth = () => {
       if (isLogin) {
         dispatch(loginSuccess(res.data));
       } else {
-        alert("Registered! Now log in.");
+        toast.success("Account created. Now log in.");
         setIsLogin(true);
       }
-    } catch (err: any) {
-      alert(err.response?.data?.message || "Something went wrong");
+    } catch (err: unknown) {
+      const msg = axios.isAxiosError(err)
+        ? (err.response?.data?.message ?? "Something went wrong")
+        : "Something went wrong";
+      toast.error(msg);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -45,8 +58,18 @@ const Auth = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button className="btn-primary" onClick={handleSubmit}>
-          {isLogin ? "Login" : "Register"}
+        <button
+          className="btn-primary"
+          disabled={submitting}
+          onClick={handleSubmit}
+        >
+          {submitting ? (
+            <span className="btn-spinner" />
+          ) : isLogin ? (
+            "Login"
+          ) : (
+            "Register"
+          )}
         </button>
         <button className="btn-toggle" onClick={() => setIsLogin(!isLogin)}>
           {isLogin ? "No account? Register" : "Have account? Login"}

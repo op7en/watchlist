@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { RootState, AppDispatch } from "./app/store";
 import { fetchWatchlist } from "./features/watchlist/watchlistThunks";
 import Auth from "./components/Auth";
@@ -16,20 +18,25 @@ function App() {
     if (token) dispatch(fetchWatchlist());
   }, [token, dispatch]);
 
-  if (!token) return <Auth />;
-
   return (
-    <div className="app-wrapper">
-      <header className="app-header">
-        <span className="app-logo">WATCHLIST</span>
-        <button className="btn-logout" onClick={() => dispatch(logout())}>
-          Logout
-        </button>
-      </header>
-      <Search />
-      <SearchResults />
-      <Watchlist />
-    </div>
+    <>
+      <ToastContainer position="bottom-right" theme="dark" autoClose={3000} />
+      {!token ? (
+        <Auth />
+      ) : (
+        <div className="app-wrapper">
+          <header className="app-header">
+            <span className="app-logo">WATCHLIST</span>
+            <button className="btn-logout" onClick={() => dispatch(logout())}>
+              Logout
+            </button>
+          </header>
+          <Search />
+          <SearchResults />
+          <Watchlist />
+        </div>
+      )}
+    </>
   );
 }
 
