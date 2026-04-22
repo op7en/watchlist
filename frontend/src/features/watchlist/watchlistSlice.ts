@@ -19,21 +19,36 @@ export interface Movie {
 
 interface WatchlistState {
   movies: Movie[];
+  loading: boolean;
+  removingIds: string[];
+  pendingIds: number[]; // ← этот добавь если ещё нет
 }
 
 const initialState: WatchlistState = {
   movies: [],
+  loading: false,
+  removingIds: [],
+  pendingIds: [], // ← и сюда
 };
-
 const watchlistSlice = createSlice({
   name: "watchlist",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
+      // fetchWatchlist — добавил pending и rejected
+      .addCase(fetchWatchlist.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(fetchWatchlist.fulfilled, (state, action) => {
+        state.loading = false; // ← добавил
         state.movies = action.payload;
       })
+      .addCase(fetchWatchlist.rejected, (state) => {
+        state.loading = false; // ← добавил
+      })
+
+      // Было:
       .addCase(addMovieToDB.fulfilled, (state, action) => {
         const exists = state.movies.some(
           (m) =>
@@ -42,9 +57,44 @@ const watchlistSlice = createSlice({
         );
         if (!exists) state.movies.push(action.payload);
       })
+
+      // Стало:
+      .addCase(addMovieToDB.pending, (state, action) => {
+        state.pendingIds.push(action.meta.arg.id);
+      })
+      .addCase(addMovieToDB.fulfilled, (state, action) => {
+        state.pendingIds = state.pendingIds.filter(
+          (id) => id !== action.meta.arg.id,
+        );
+        const exists = state.movies.some(
+          (m) =>
+            m.movieId === action.payload.movieId ||
+            m.id === action.payload.movieId,
+        );
+        if (!exists) state.movies.push(action.payload);
+      })
+      .addCase(addMovieToDB.rejected, (state, action) => {
+        state.pendingIds = state.pendingIds.filter(
+          (id) => id !== action.meta.arg.id,
+        );
+      })
+
+      // removeMovieFromDB — добавил pending и rejected
+      .addCase(removeMovieFromDB.pending, (state, action) => {
+        state.removingIds.push(action.meta.arg);
+      })
       .addCase(removeMovieFromDB.fulfilled, (state, action) => {
+        state.removingIds = state.removingIds.filter(
+          (id) => id !== action.payload,
+        );
         state.movies = state.movies.filter((m) => m._id !== action.payload);
       })
+      .addCase(removeMovieFromDB.rejected, (state, action) => {
+        state.removingIds = state.removingIds.filter(
+          (id) => id !== action.meta.arg,
+        );
+      })
+
       .addCase(rateMovie.fulfilled, (state, action) => {
         const index = state.movies.findIndex(
           (m) => m._id === action.payload._id,

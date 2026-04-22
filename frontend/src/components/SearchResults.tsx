@@ -3,40 +3,42 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../app/store";
 import { Movie } from "../features/movies/moviesSlice";
 import { addMovieToDB } from "../features/watchlist/watchlistThunks";
-import axios from "axios";
+import { useTrailer } from "../hooks/useTrailer";
+import MovieCardSkeleton from "./MovieCardSkeleton";
 
 const SearchResults = () => {
   const { movies, loading } = useSelector((state: RootState) => state.movies);
   const watchlist = useSelector((state: RootState) => state.watchlist.movies);
+  const pendingIds = useSelector((s: RootState) => s.watchlist.pendingIds);
   const dispatch = useDispatch<AppDispatch>();
+  const { openTrailer, loadingId } = useTrailer();
 
-  const handleTrailer = async (movieId: number) => {
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/movie/${movieId}/videos`,
-      { params: { api_key: process.env.REACT_APP_TMDB_API_KEY } },
+  if (loading) {
+    return (
+      <div>
+        <p className="section-label">Search Results</p>
+        <div className="results-grid">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <MovieCardSkeleton key={i} />
+          ))}
+        </div>
+      </div>
     );
-    const trailer = res.data.results.find(
-      (v: any) => v.type === "Trailer" && v.site === "YouTube",
-    );
-    if (trailer) {
-      window.open(`https://www.youtube.com/watch?v=${trailer.key}`, "_blank");
-    } else {
-      alert("No trailer found");
-    }
-  };
-
-  if (loading) return <p className="loading">Loading...</p>;
+  }
 
   if (movies.length === 0) return null;
 
   return (
     <div>
       <p className="section-label">Search Results</p>
-      <div className="results-grid">
+      <div className="results-grid fade-in">
         {movies.map((movie: Movie) => {
           const isAdded = watchlist.some(
             (m) => m.movieId === movie.id || m.id === movie.id,
           );
+          const isPending = pendingIds.includes(movie.id);
+          const isTrailerLoading = loadingId === movie.id;
+
           return (
             <div className="movie-card" key={movie.id}>
               <img
@@ -49,16 +51,27 @@ const SearchResults = () => {
                 <div className="movie-card-actions">
                   <button
                     className="btn-add"
+                    disabled={isAdded || isPending}
                     onClick={() => dispatch(addMovieToDB(movie))}
-                    disabled={isAdded}
                   >
-                    {isAdded ? "Added ✓" : "Add"}
+                    {isPending ? (
+                      <span className="btn-spinner" />
+                    ) : isAdded ? (
+                      "Added ✓"
+                    ) : (
+                      "Add"
+                    )}
                   </button>
                   <button
                     className="btn-trailer"
-                    onClick={() => handleTrailer(movie.id)}
+                    disabled={isTrailerLoading}
+                    onClick={() => openTrailer(movie.id)}
                   >
-                    Trailer
+                    {isTrailerLoading ? (
+                      <span className="btn-spinner" />
+                    ) : (
+                      "Trailer"
+                    )}
                   </button>
                 </div>
               </div>
