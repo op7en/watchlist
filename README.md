@@ -25,21 +25,30 @@ This project is built around a simple idea: your watchlist should feel like a pe
 
 ---
 
-## Core Features
+## Features
 
 ### Movie Search
+
 Real-time search powered by the TMDB API. Results appear as you type.
 
 ### Personal Watchlist
-Add and remove movies from your watchlist. Data is stored per user in the database.
+
+Add and remove movies from your watchlist. Data is stored per user in MongoDB — not in localStorage, not shared between accounts.
 
 ### Trailer Playback
-Watch YouTube trailers directly inside the app.
+
+YouTube trailers embedded via the YouTube IFrame API, opening directly inside the app.
 
 ### Authentication
+
 JWT-based registration and login. Each user has their own isolated data.
 
+### State Management
+
+Global state handled with Redux Toolkit. Auth and watchlist data live in separate slices; async API calls use `createAsyncThunk`.
+
 ### Responsive Design
+
 Works on mobile and desktop.
 
 ---
@@ -59,40 +68,43 @@ Works on mobile and desktop.
 
 ## Tech Stack
 
-| Layer | Technologies |
-|-------|-------------|
-| Frontend | React, TypeScript, Redux Toolkit, Axios, TMDB API |
-| Backend | Node.js, Express, TypeScript, MongoDB Atlas, Mongoose, JWT, bcryptjs |
-| Deploy | Vercel (frontend) · Railway (backend) |
+| Layer    | Technologies                                                          |
+|----------|-----------------------------------------------------------------------|
+| Frontend | React, TypeScript, Redux Toolkit, Axios, TMDB API                    |
+| Backend  | Node.js, Express, TypeScript, MongoDB Atlas, Mongoose, JWT, bcryptjs |
+| Deploy   | Vercel (frontend) · Railway (backend)                                 |
+
+**Why MongoDB here vs PostgreSQL in job-tracker?**
+Movie metadata from TMDB is flexible and document-shaped — no fixed schema needed. MongoDB with Mongoose fits naturally. Job-tracker uses relational data (applications, activity logs, tokens) where PostgreSQL and strict schema give more control.
 
 ---
 
 ## Project Structure
 
-```
+```text
 watchlist/
 ├── backend/
 │   └── src/
-│       ├── middleware/
-│       ├── models/
-│       ├── routes/
+│       ├── middleware/    # Auth middleware
+│       ├── models/        # Mongoose schemas
+│       ├── routes/        # API endpoints
 │       └── app.ts
 └── frontend/
     └── src/
-        ├── api/
-        ├── app/
+        ├── api/           # Axios instance
+        ├── app/           # Redux store setup
         ├── components/
         ├── features/
-        │   ├── auth/
-        │   ├── movies/
-        │   └── watchlist/
+        │   ├── auth/      # Auth slice + components
+        │   ├── movies/    # Search + TMDB integration
+        │   └── watchlist/ # Watchlist slice + components
         ├── pages/
         └── styles/
 ```
 
 ---
 
-## Getting Started
+## Local Setup
 
 **Backend**
 ```bash
@@ -126,4 +138,4 @@ REACT_APP_TMDB_URL=https://api.themoviedb.org/3
 
 ---
 
-[Читать на русском](READMERU.md)
+[Читать на русском](README.ru.md)
