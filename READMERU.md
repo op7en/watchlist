@@ -25,21 +25,30 @@ Fullstack приложение для отслеживания фильмов н
 
 ---
 
-## Основные возможности
+## Функциональность
 
 ### Поиск фильмов
+
 Поиск в реальном времени через TMDB API. Результаты появляются по мере ввода.
 
 ### Личный список фильмов
-Добавляй и удаляй фильмы. Данные хранятся в базе данных привязанными к аккаунту.
+
+Добавляй и удаляй фильмы. Данные хранятся в MongoDB привязанными к аккаунту — не в localStorage, не общие для всех.
 
 ### Просмотр трейлеров
-YouTube-трейлеры открываются прямо внутри приложения.
+
+YouTube-трейлеры встроены через YouTube IFrame API и открываются прямо внутри приложения.
 
 ### Аутентификация
+
 Регистрация и вход через JWT. У каждого пользователя изолированные данные.
 
+### Управление состоянием
+
+Глобальное состояние через Redux Toolkit. Данные авторизации и вотчлиста хранятся в отдельных слайсах; асинхронные запросы используют `createAsyncThunk`.
+
 ### Адаптивный дизайн
+
 Работает на мобильных и десктопе.
 
 ---
@@ -59,33 +68,36 @@ YouTube-трейлеры открываются прямо внутри прил
 
 ## Стек технологий
 
-| Слой | Технологии |
-|------|-----------|
-| Frontend | React, TypeScript, Redux Toolkit, Axios, TMDB API |
-| Backend | Node.js, Express, TypeScript, MongoDB Atlas, Mongoose, JWT, bcryptjs |
-| Деплой | Vercel (frontend) · Railway (backend) |
+| Слой      | Технологии                                                            |
+|-----------|-----------------------------------------------------------------------|
+| Фронтенд  | React, TypeScript, Redux Toolkit, Axios, TMDB API                    |
+| Бэкенд    | Node.js, Express, TypeScript, MongoDB Atlas, Mongoose, JWT, bcryptjs |
+| Деплой    | Vercel (фронтенд) · Railway (бэкенд)                                 |
+
+**Почему MongoDB здесь, а не PostgreSQL как в job-tracker?**
+Данные о фильмах из TMDB гибкие и document-shaped — фиксированная схема не нужна. MongoDB с Mongoose подходит естественно. Job-tracker использует реляционные данные (заявки, история активности, токены), где PostgreSQL и строгая схема дают больше контроля.
 
 ---
 
 ## Структура проекта
 
-```
+```text
 watchlist/
 ├── backend/
 │   └── src/
-│       ├── middleware/
-│       ├── models/
-│       ├── routes/
+│       ├── middleware/    # Auth middleware
+│       ├── models/        # Mongoose схемы
+│       ├── routes/        # API эндпоинты
 │       └── app.ts
 └── frontend/
     └── src/
-        ├── api/
-        ├── app/
+        ├── api/           # Axios instance
+        ├── app/           # Redux store
         ├── components/
         ├── features/
-        │   ├── auth/
-        │   ├── movies/
-        │   └── watchlist/
+        │   ├── auth/      # Auth слайс + компоненты
+        │   ├── movies/    # Поиск + TMDB интеграция
+        │   └── watchlist/ # Watchlist слайс + компоненты
         ├── pages/
         └── styles/
 ```
