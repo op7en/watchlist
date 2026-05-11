@@ -7,7 +7,9 @@ import { useTrailer } from "../hooks/useTrailer";
 import MovieCardSkeleton from "./MovieCardSkeleton";
 
 const SearchResults = () => {
-  const { movies, loading } = useSelector((state: RootState) => state.movies);
+  const { movies, loading, error } = useSelector(
+    (state: RootState) => state.movies,
+  );
   const watchlist = useSelector((state: RootState) => state.watchlist.movies);
   const pendingIds = useSelector((s: RootState) => s.watchlist.pendingIds);
   const dispatch = useDispatch<AppDispatch>();
@@ -22,6 +24,14 @@ const SearchResults = () => {
             <MovieCardSkeleton key={i} />
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="search-error" role="alert">
+        {error}
       </div>
     );
   }

@@ -4,7 +4,7 @@
 
 A fullstack movie tracking app built with React, TypeScript, and Node.js.
 
-Search movies, build your personal watchlist, and watch trailers — all in one place.
+Search movies, build your personal watchlist, and open trailers from one app.
 
 🔗 **[Live Demo](https://watchlist-sigma-jade.vercel.app)**
 
@@ -20,7 +20,7 @@ This project is built around a simple idea: your watchlist should feel like a pe
 
 - Separate what you want to watch from what you have already seen
 - Discover and save movies without jumping between apps
-- Watch trailers without leaving the app
+- Open trailers from search results and saved movies
 - User-specific data stored per account, not in local storage
 
 ---
@@ -36,8 +36,7 @@ Real-time search powered by the TMDB API. Results appear as you type.
 Add and remove movies from your watchlist. Data is stored per user in MongoDB — not in localStorage, not shared between accounts.
 
 ### Trailer Playback
-
-YouTube trailers embedded via the YouTube IFrame API, opening directly inside the app.
+Open YouTube trailers from search results and saved movies.
 
 ### Authentication
 
@@ -95,10 +94,9 @@ watchlist/
         ├── app/           # Redux store setup
         ├── components/
         ├── features/
-        │   ├── auth/      # Auth slice + components
+        │   ├── auth/      # Auth slice
         │   ├── movies/    # Search + TMDB integration
-        │   └── watchlist/ # Watchlist slice + components
-        ├── pages/
+        │   └── watchlist/ # Watchlist slice + thunks
         └── styles/
 ```
 
@@ -136,6 +134,8 @@ REACT_APP_TMDB_API_KEY=your_tmdb_api_key
 REACT_APP_TMDB_URL=https://api.themoviedb.org/3
 ```
 
+Get a TMDB API key at https://www.themoviedb.org/settings/api.
+
 ---
 
-[Читать на русском](README.ru.md)
+[Читать на русском](READMERU.md)

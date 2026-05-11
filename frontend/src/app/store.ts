@@ -11,10 +11,6 @@ export const store = configureStore({
     movies: moviesReducer,
   },
 });
-store.subscribe(() => {
-  const { watchlist } = store.getState();
-  localStorage.setItem("watchlist", JSON.stringify(watchlist.movies));
-});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

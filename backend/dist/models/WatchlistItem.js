@@ -34,4 +34,6 @@ const WatchlistItemSchema = new mongoose_1.Schema({
     watched: { type: Boolean, default: false },
     dateAdded: { type: Date, default: Date.now },
 });
-exports.default = mongoose_1.default.model("WatchlistItem", WatchlistItemSchema);
+WatchlistItemSchema.index({ userId: 1 });
+const WatchlistItem = mongoose_1.default.model("WatchlistItem", WatchlistItemSchema);
+exports.default = WatchlistItem;

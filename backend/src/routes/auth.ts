@@ -2,11 +2,10 @@ import { Router, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User";
-import { config } from "../config/env"; // твой файл из прошлого ответа
+import { config } from "../config/env";
 
 const router = Router();
 
-// Простая валидация — без сторонних библиотек
 const isValidEmail = (v: unknown): v is string =>
   typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
@@ -31,7 +30,7 @@ router.post("/register", async (req: Request, res: Response) => {
       return res.status(409).json({ message: "Email already registered" });
     }
 
-    const hashed = await bcrypt.hash(password, 10);
+    const hashed = await bcrypt.hash(password, 12);
     await new User({ email, password: hashed }).save();
 
     res.status(201).json({ message: "User created" });
@@ -50,7 +49,6 @@ router.post("/login", async (req: Request, res: Response) => {
     }
 
     const user = await User.findOne({ email });
-    // Намеренно одинаковое сообщение — не даём перебором выяснить, есть ли юзер
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -60,11 +58,9 @@ router.post("/login", async (req: Request, res: Response) => {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const token = jwt.sign(
-      { id: user._id },
-      config.JWT_SECRET,
-      { expiresIn: "24h" }, // было 1h — юзер не будет выброшен через час
-    );
+    const token = jwt.sign({ id: user._id }, config.JWT_SECRET, {
+      expiresIn: "24h",
+    });
 
     res.json({ token, email: user.email });
   } catch (err) {
