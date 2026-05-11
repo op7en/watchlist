@@ -1,4 +1,5 @@
-// src/config/env.ts
+import "dotenv/config";
+
 const { JWT_SECRET } = process.env;
 
 if (!JWT_SECRET || JWT_SECRET.length < 32) {

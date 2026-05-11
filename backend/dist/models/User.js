@@ -29,5 +29,5 @@ const UserSchema = new mongoose_1.Schema({
     password: { type: String, required: true },
     createdAt: { type: Date, default: Date.now },
 });
-// @ts-ignore
-exports.default = mongoose_1.default.model("User", UserSchema);
+const User = mongoose_1.default.model("User", UserSchema);
+exports.default = User;

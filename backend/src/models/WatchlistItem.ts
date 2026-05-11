@@ -1,17 +1,17 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-export interface IWatchlistItem extends Document {
+export interface IWatchlistItem {
   userId: string;
   movieId: number;
   title: string;
   year: string;
   rating: number;
   poster_path: string;
-  watched: boolean; // добавлено
+  watched: boolean;
   dateAdded: Date;
 }
 
-const WatchlistItemSchema: Schema<IWatchlistItem> = new Schema({
+const WatchlistItemSchema = new Schema({
   userId: { type: String, required: true },
   movieId: { type: Number, required: true },
   title: { type: String, required: true },
@@ -22,7 +22,11 @@ const WatchlistItemSchema: Schema<IWatchlistItem> = new Schema({
   dateAdded: { type: Date, default: Date.now },
 });
 
-export default mongoose.model<IWatchlistItem>(
+WatchlistItemSchema.index({ userId: 1 });
+
+const WatchlistItem = (mongoose.model as any)(
   "WatchlistItem",
   WatchlistItemSchema,
 );
+
+export default WatchlistItem;

@@ -1,4 +1,3 @@
-// components/MovieCardSkeleton.tsx
 const MovieCardSkeleton = () => (
   <div className="movie-card">
     <div className="skeleton skeleton-poster" />

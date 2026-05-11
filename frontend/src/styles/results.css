@@ -13,6 +13,16 @@
   margin-bottom: 48px;
 }
 
+.search-error {
+  color: var(--red);
+  border: 1px solid rgba(192, 57, 43, 0.4);
+  background: rgba(192, 57, 43, 0.08);
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  margin-bottom: 32px;
+  font-size: 0.88rem;
+}
+
 .movie-card {
   background: var(--surface);
   border: 1px solid #1e1e1e;

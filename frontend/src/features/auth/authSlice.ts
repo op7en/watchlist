@@ -7,7 +7,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   token: localStorage.getItem("token"),
-  email: null,
+  email: localStorage.getItem("email"),
 };
 
 const authSlice = createSlice({
@@ -21,11 +21,13 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.email = action.payload.email;
       localStorage.setItem("token", action.payload.token);
+      localStorage.setItem("email", action.payload.email);
     },
     logout(state) {
       state.token = null;
       state.email = null;
       localStorage.removeItem("token");
+      localStorage.removeItem("email");
     },
   },
 });
