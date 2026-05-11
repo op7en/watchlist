@@ -8,7 +8,7 @@ Search movies, build your personal watchlist, and open trailers from one app.
 
 🔗 **[Live Demo](https://watchlist-sigma-jade.vercel.app)**
 
-> The backend runs on Railway's free tier and may take a few seconds to wake up after inactivity.
+> The backend is designed for Railway Serverless. Enable Serverless in Railway settings; the app closes its MongoDB connection after 5 minutes of inactivity so Railway can put the service to sleep.
 
 ---
 
