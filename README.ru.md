@@ -6,8 +6,8 @@ thunk'ами и интеграцию реального стороннего API
 
 [Демо](https://watchlist-sigma-jade.vercel.app) · [English README](README.md)
 
-*Бэк на бесплатном Railway. Если Railway Serverless включён, первый запрос
-после долгого простоя может cold-start'нуть на ~10 секунд.*
+*Бэк на бесплатном Railway - первый запрос после долгого простоя может занять
+на несколько секунд дольше.*
 
 ![watchlist](./watchlist.png)
 
@@ -87,9 +87,9 @@ REACT_APP_TMDB_URL=https://api.themoviedb.org/3
   блокируют повторные add/remove клики и показывают loading state, пока запрос
   к серверу в полёте.
 - **Подключение к БД.** При долгом простое соединение с Mongo закрывается,
-  чтобы не держать Atlas/Railway занятыми неиспользуемым DB connection.
-  Переподключение лениво при следующем запросе. Это помогает Railway Serverless,
-  но само решение о sleep всё равно принимает Railway.
+  чтобы освободить connection slot на free tier Atlas (там лимит 500).
+  Переподключение лениво при следующем запросе. Сам процесс не засыпает -
+  `app.listen()` держит event loop.
 
 ## Почему так
 

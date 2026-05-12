@@ -6,8 +6,8 @@ integrating a real third-party API.
 
 [Live demo](https://watchlist-sigma-jade.vercel.app) · [README на русском](README.ru.md)
 
-*Backend runs on Railway free tier. If Railway Serverless is enabled, the first
-request after long idle may cold-start in ~10 seconds.*
+*Backend runs on Railway free tier - the first request after long idle may take
+a few extra seconds.*
 
 ![watchlist](./watchlist.png)
 
@@ -89,9 +89,9 @@ All `/watchlist/*` routes require `Authorization: Bearer <jwt>`.
   slice disable duplicate add/remove clicks and show loading states while the
   server request is in flight.
 - **DB connection handling.** On long idle, the Mongo connection is closed to
-  avoid keeping Atlas/Railway busy through an unused DB connection. It re-opens
-  lazily on the next request. This supports Railway Serverless, but Railway
-  still controls whether and when the service sleeps.
+  free a connection slot on Atlas free tier (limit is 500). It re-opens lazily
+  on the next request. The process itself stays alive - `app.listen()` keeps
+  the event loop running regardless.
 
 ## Why these choices
 
